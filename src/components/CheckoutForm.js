@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// Import our custom useForm hook
+import useForm from '../hooks/useForm'
+
 const initialValue = {
   firstName: "",
   lastName: "",
@@ -15,11 +18,13 @@ const initialValue = {
 
 const CheckoutForm = (props) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [values, setValues] = useState(initialValue);
 
-  const handleChanges = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
+  ///// useForm invocation /////
+  // I am deleting setValues because this component no longer sets
+  // state, our custom hook takes care of that for us.
+  // We have to return our handleChanges from our custom hook.
+  // Since we are destructuring with an array, the names do not need to match.
+  const [values, handleChanges] = useForm(initialValue);
 
   const handleSubmit = (e) => {
     e.preventDefault();
